@@ -45,7 +45,7 @@ button.mochi.squish{animation:squish .45s ease}
 .envs{display:flex;gap:14px}
 .env{all:unset;cursor:pointer;font-size:56px;transition:transform .2s}
 .env:hover{transform:translateY(-6px)}
-.fall{position:absolute;top:-40px;font-size:38px;cursor:pointer;user-select:none;touch-action:manipulation;animation:fall 3s linear forwards}
+.fall{position:absolute;top:-40px;font-size:38px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;animation:fall 3s linear forwards}
 @keyframes fall{to{top:100%}}
 .fall.pop{animation:none;transition:transform .2s,opacity .2s;transform:scale(1.6);opacity:0}
 .letterov{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 20px calc(env(safe-area-inset-bottom,0px) + 20px)}
