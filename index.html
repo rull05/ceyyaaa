@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ceyyaa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap">
+<style>
+:root{--bg:#ffe3ec;--ink:#4a1d3f;--blob:#fff6f9;--blush:#ff9ebb;--bubble:#fff;--accent:#c2417a;--mint:#bfebd7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1426;--ink:#ffe3ec;--blob:#ffd9e6;--blush:#ff7fa6;--bubble:#43223d;--accent:#ff9ebb;--mint:#3f6b5a}}
+:root[data-theme="dark"]{--bg:#2a1426;--ink:#ffe3ec;--blob:#ffd9e6;--blush:#ff7fa6;--bubble:#43223d;--accent:#ff9ebb;--mint:#3f6b5a}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Fredoka","Trebuchet MS",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px;text-align:center;overflow-x:hidden}
+.bubble{position:relative;background:var(--bubble);border-radius:28px;padding:20px 26px;max-width:min(420px,100%);font-size:clamp(1.2rem,4.6vw,1.6rem);font-weight:600;line-height:1.35;min-height:5.6em;display:flex;align-items:center;justify-content:center}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-14px;width:28px;height:28px;background:var(--bubble);border-radius:6px;transform:translateX(-50%) rotate(45deg)}
+.bubble span{display:block;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+button.mochi{all:unset;cursor:pointer;position:relative;width:170px;height:150px;border-radius:50% 50% 46% 46%/58% 58% 42% 42%;background:var(--blob);box-shadow:inset 0 -10px 0 rgba(194,65,122,.12);animation:bob 3s ease-in-out infinite}
+button.mochi:focus-visible{outline:4px solid var(--accent);outline-offset:6px}
+button.mochi.squish{animation:squish .45s ease}
+.eye{position:absolute;top:56px;width:14px;height:20px;border-radius:50%;background:var(--ink);animation:blink 4.5s infinite}
+.eye.l{left:46px}.eye.r{right:46px}
+.cheek{position:absolute;top:84px;width:26px;height:16px;border-radius:50%;background:var(--blush);opacity:.8}
+.cheek.l{left:22px}.cheek.r{right:22px}
+.mouth{position:absolute;left:50%;top:86px;width:20px;height:11px;border:3px solid var(--ink);border-top:0;border-radius:0 0 20px 20px;transform:translateX(-50%)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes squish{0%{transform:scale(1)}35%{transform:scale(1.15,.8)}70%{transform:scale(.94,1.1)}100%{transform:scale(1)}}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.hint{font-size:1rem;opacity:.75;background:var(--mint);padding:6px 16px;border-radius:99px}
+.heart{position:fixed;pointer-events:none;font-size:22px;animation:float 1.2s ease-out forwards}
+@keyframes float{to{transform:translateY(-120px) scale(1.3);opacity:0}}
+.bloom{position:fixed;font-size:clamp(28px,7vw,48px);pointer-events:none;z-index:5;animation:bloom 2.6s ease-out forwards}
+@keyframes bloom{0%{transform:scale(0) rotate(-40deg);opacity:0}20%{transform:scale(1.25) rotate(10deg);opacity:1}35%{transform:scale(1) rotate(0)}80%{opacity:1}100%{transform:scale(1);opacity:0}}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{font:inherit;font-weight:600;color:var(--ink);background:var(--bubble);border:0;border-radius:99px;padding:10px 18px;cursor:pointer}
+.btn:focus-visible,.env:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.ov{position:fixed;inset:0;z-index:10;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.ov[hidden]{display:none}
+.bar{display:flex;width:100%;max-width:480px;justify-content:space-between;align-items:center;font-weight:600}
+.field{position:relative;flex:1;width:100%;max-width:480px;overflow:hidden;border-radius:28px;background:var(--bubble)}
+.field.end{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:20px}
+.note{font-size:1.3rem;font-weight:600;line-height:1.4;max-width:340px}
+.envs{display:flex;gap:14px}
+.env{all:unset;cursor:pointer;font-size:56px;transition:transform .2s}
+.env:hover{transform:translateY(-6px)}
+.fall{position:absolute;top:-40px;font-size:38px;cursor:pointer;user-select:none;touch-action:manipulation;animation:fall 3s linear forwards}
+@keyframes fall{to{top:100%}}
+.fall.pop{animation:none;transition:transform .2s,opacity .2s;transform:scale(1.6);opacity:0}
+.letterov{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 20px calc(env(safe-area-inset-bottom,0px) + 20px)}
+.letterov[hidden]{display:none}
+.stage{margin:auto;display:flex;flex-direction:column;align-items:center;gap:22px;width:100%;max-width:420px}
+.envelope{all:unset;display:block;cursor:pointer;position:relative;width:min(280px,78vw);height:min(190px,53vw);background:var(--blush);border-radius:14px;box-shadow:0 10px 0 rgba(194,65,122,.18);animation:bob 3s ease-in-out infinite}
+.envelope:focus-visible{outline:3px solid var(--accent);outline-offset:8px}
+.envelope::after{content:"";position:absolute;inset:0;border-radius:14px;background:rgba(255,255,255,.35);clip-path:polygon(0 100%,0 30%,50% 62%,100% 30%,100% 100%)}
+.flap{position:absolute;left:0;top:0;width:100%;height:56%;background:var(--accent);border-radius:14px 14px 0 0;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transform:perspective(600px) rotateX(0);transition:transform .7s ease;z-index:1}
+.envelope.open .flap{transform:perspective(600px) rotateX(180deg)}
+.seal{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:34px;z-index:2;transition:opacity .3s}
+.envelope.open .seal{opacity:0}
+.paper{background:var(--bubble);border-radius:22px;padding:26px 24px;width:100%;text-align:left;line-height:1.6;font-size:1.05rem;animation:pop .5s ease}
+.paper p{margin:0 0 .9em}
+.paper .sign{margin:-.5em 0 0}
+.paper .sign,.paper .nm{font-weight:600;font-size:1.25rem;color:var(--accent)}
+.musicbtn{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:30;width:50px;height:50px;border-radius:50%;border:0;background:var(--bubble);color:var(--ink);font-size:24px;cursor:pointer;box-shadow:0 4px 0 rgba(194,65,122,.2)}
+.musicbtn[hidden]{display:none}
+.musicbtn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.musicbtn.on{animation:bob 1.2s ease-in-out infinite}
+.songs{position:fixed;left:12px;right:12px;margin:0 auto;max-width:420px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);z-index:31;background:var(--bubble);color:var(--ink);border-radius:28px;padding:16px;max-height:60vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.songs[hidden]{display:none}
+.songs .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.songs h2{margin:0;font-size:1.2rem}
+.song{all:unset;display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:10px 12px;border-radius:16px;cursor:pointer}
+.song:hover,.song.cur{background:var(--bg)}
+.song:focus-visible{outline:3px solid var(--accent)}
+.song b{display:block}
+.song small{opacity:.7}
+.song .ic{font-size:20px;width:24px;text-align:center}
+.sn{font-size:.9rem;opacity:.8;min-height:1.2em;margin:8px 4px 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="bubble" aria-live="polite"><span id="msg">Hi, you! Yes, you, the one who just opened this page. I'm so happy you're here.</span></div>
+<button class="mochi" id="mochi" aria-label="Tap the blob for another message">
+<i class="eye l"></i><i class="eye r"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth"></i>
+</button>
+<div class="hint">tap me, 4 taps is a surprise</div>
+<div class="row"><button class="btn" id="g1">Catch the hearts 💗</button><button class="btn" id="g2">Pick an envelope 💌</button></div>
+<button class="musicbtn" id="musicbtn" aria-label="Songs for Ceyya" hidden>🎵</button>
+<div class="songs" id="songs" hidden><div class="top"><h2>Songs for Ceyya</h2><button class="btn" id="songx" aria-label="Close">✕</button></div><div id="slist"></div><div class="sn" id="snote"></div></div>
+<div class="letterov" id="lov" hidden><div class="stage" id="stage"></div></div>
+<div class="ov" id="ov" hidden>
+<div class="bar"><span id="ttl"></span><span id="score"></span><button class="btn" id="x" aria-label="Close">✕</button></div>
+<div class="field" id="field"></div>
+</div>
+<script>
+var msgs=["You're doing better than you think.","Arull said he love you <3","Today is allowed to be slow and soft.","You make ordinary moments nicer.","Proud of you for showing up today.","You deserve snacks and a good nap.","Your smile is the cutest thing on the internet.","Everything is going to be okay, I promise."];
+var taps=0,i=-1,msg=document.getElementById("msg"),m=document.getElementById("mochi");
+m.addEventListener("click",function(e){
+  i=(i+1)%msgs.length;taps++;if(taps%4===0){bloom();setTimeout(showLetter,1800);}
+  msg.textContent=msgs[i];
+  msg.style.animation="none";void msg.offsetWidth;msg.style.animation="";
+  m.classList.remove("squish");void m.offsetWidth;m.classList.add("squish");
+  var r=m.getBoundingClientRect();
+  for(var k=0;k<5;k++){
+    var h=document.createElement("div");
+    h.className="heart";h.textContent=["💗","💖","🌸","✨","💕"][k];
+    h.style.left=(r.left+20+Math.random()*(r.width-40))+"px";
+    h.style.top=(r.top+Math.random()*30)+"px";
+    h.style.animationDelay=(k*0.08)+"s";
+    document.body.appendChild(h);
+    setTimeout(function(x){x.remove()},1600,h);
+  }
+});
+var ov=document.getElementById("ov"),field=document.getElementById("field"),sc=document.getElementById("score"),timer,spawn;
+var flowers=["🌸","🌷","🌼","🌺","🌻","💐","🪻"];
+var notes=["I love the way you laugh.","You're my favorite person to talk to.","Thank you for being you.","I'm so lucky it's you.","You make every day brighter.","Arull said he love you"];
+function bloom(){for(var k=0;k<30;k++){var f=document.createElement("div");f.className="bloom";f.textContent=flowers[k%flowers.length];f.style.left=(4+Math.random()*84)+"vw";f.style.top=(4+Math.random()*84)+"vh";f.style.animationDelay=(Math.random()*0.5)+"s";document.body.appendChild(f);setTimeout(function(x){x.remove()},3300,f);}}
+function stop(){clearInterval(timer);clearInterval(spawn);}
+function openOv(t){stop();ov.hidden=false;document.getElementById("x").hidden=false;document.getElementById("ttl").textContent=t;sc.textContent="";field.className="field";field.innerHTML="";}
+function again(label,fn){var b=document.createElement("button");b.className="btn";b.textContent=label;b.onclick=fn;field.appendChild(b);}
+document.getElementById("x").onclick=function(){stop();ov.hidden=true;};
+function catchGame(){
+  openOv("Catch the hearts");
+  var score=0,t=15;
+  function upd(){sc.textContent="💗 "+score+" · "+t+"s";}
+  upd();
+  spawn=setInterval(function(){
+    var h=document.createElement("div");h.className="fall";
+    h.textContent=["💗","💖","💕","🌸"][Math.floor(Math.random()*4)];
+    h.style.left=(Math.random()*(field.clientWidth-50))+"px";
+    h.style.animationDuration=(2.2+Math.random()*1.5)+"s";
+    h.addEventListener("pointerdown",function(){if(h.classList.contains("pop"))return;score++;h.style.top=getComputedStyle(h).top;h.classList.add("pop");upd();});
+    field.appendChild(h);
+    setTimeout(function(){h.remove()},4000);
+  },550);
+  timer=setInterval(function(){
+    t--;upd();
+    if(t<=0){stop();field.className="field end";field.innerHTML="";var n=document.createElement("div");n.className="note";n.textContent="You caught "+score+" hearts! Every one of them is yours anyway. 💗";field.appendChild(n);again("Play again",catchGame);}
+  },1000);
+}
+function envGame(){
+  openOv("Pick an envelope");
+  field.className="field end";
+  var n=document.createElement("div");n.className="note";n.textContent="Pick one 💌";field.appendChild(n);
+  var w=document.createElement("div");w.className="envs";
+  for(var k=0;k<3;k++){
+    var b=document.createElement("button");b.className="env";b.textContent="💌";b.setAttribute("aria-label","Envelope "+(k+1));
+    b.onclick=function(){field.innerHTML="";var m=document.createElement("div");m.className="note";m.textContent=notes[Math.floor(Math.random()*notes.length)];field.appendChild(m);again("Open another",envGame);};
+    w.appendChild(b);
+  }
+  field.appendChild(w);
+}
+var lov=document.getElementById("lov"),stage=document.getElementById("stage");
+function showLetter(){
+  if(!lov.hidden)return;
+  stop();ov.hidden=true;lov.hidden=false;stage.innerHTML="";
+  var e=document.createElement("button");e.className="envelope";e.setAttribute("aria-label","Open the envelope");
+  e.innerHTML='<i class="flap"></i><span class="seal">💗</span>';
+  var h=document.createElement("div");h.className="hint";h.textContent="a letter for you, tap to open";
+  e.onclick=function(){e.classList.add("open");h.remove();setTimeout(letter,900);};
+  stage.appendChild(e);stage.appendChild(h);
+}
+function letter(){
+  stage.innerHTML="";
+  var p=document.createElement("div");p.className="paper";
+  ["Hey <span class=\"nm\">Ceyya</span>,","I was just sitting here thinking about you and realized I don't tell you nearly enough how much you brighten my days.","From our small talk about random things, you have this effortless way of making life so much better. You're my favorite distraction, my favorite person to talk to, and the best part of my routine.","Just wanted to send a little reminder that you're amazing, and I'm the luckiest person in the world to meet you.","Love always,"].forEach(function(t){var q=document.createElement("p");q.innerHTML=t;p.appendChild(q);});
+  var s=document.createElement("p");s.className="sign";s.textContent="Arull 💗";p.appendChild(s);
+  stage.appendChild(p);
+  var b=document.createElement("button");b.className="btn";b.textContent="Back to the blob";b.onclick=function(){lov.hidden=true;};
+  stage.appendChild(b);
+}
+function gateGame(){
+  openOv("Catch 15 hearts for me!");
+  document.getElementById("x").hidden=true;
+  var score=0,done=false;
+  function upd(){sc.textContent="💗 "+score+" / 15";}
+  upd();
+  spawn=setInterval(function(){
+    var h=document.createElement("div");h.className="fall";
+    h.textContent=["💗","💖","💕"][Math.floor(Math.random()*4)];
+    h.style.left=(Math.random()*(field.clientWidth-50))+"px";
+    h.style.animationDuration=(2.4+Math.random()*1.4)+"s";
+    h.addEventListener("pointerdown",function(){
+      if(done||h.classList.contains("pop"))return;
+      score++;h.style.top=getComputedStyle(h).top;h.classList.add("pop");upd();
+      if(score>=15){done=true;stop();field.className="field end";field.innerHTML="";var n=document.createElement("div");n.className="note";n.textContent="You caught them all! 💗";field.appendChild(n);setTimeout(function(){ov.hidden=true;mb.hidden=false;},1600);}
+    });
+    field.appendChild(h);
+    setTimeout(function(){h.remove()},4200);
+  },600);
+}
+document.getElementById("g1").onclick=catchGame;
+document.getElementById("g2").onclick=envGame;
+var SONGS=[
+  {title:"Secret Door",artist:"Artic Monkeys",src:"./assets/secret_door.mp3"},
+  {title:"Pretty Eyes",artist:"Zehdi",src:"./assets/pretty_eyes.mp3"},
+  {title:"Seasons",artist:"Wave 2 Earth",src:"./assets/seasons.mp3"}
+];
+var audio=new Audio(),cur=-1,mb=document.getElementById("musicbtn"),sg=document.getElementById("songs"),sl=document.getElementById("slist"),sn=document.getElementById("snote");
+function drawSongs(){
+  sl.innerHTML="";
+  SONGS.forEach(function(s,k){
+    var b=document.createElement("button");b.className="song"+(k===cur?" cur":"");
+    b.innerHTML='<span class="ic">'+(k===cur&&!audio.paused?"⏸":"▶")+'</span><span><b></b><small></small></span>';
+    b.querySelector("b").textContent=s.title;b.querySelector("small").textContent=s.artist;
+    b.onclick=function(){pick(k);};
+    sl.appendChild(b);
+  });
+  mb.textContent=audio.paused?"🎵":"🎶";
+  mb.classList.toggle("on",!audio.paused);
+}
+function pick(k){
+  var s=SONGS[k];
+  if(!s.src){sn.textContent="This song has no audio file yet.";return;}
+  sn.textContent="";
+  if(k===cur&&audio.src){if(audio.paused)audio.play();else audio.pause();}
+  else{cur=k;audio.src=s.src;var pr=audio.play();if(pr&&pr.catch)pr.catch(function(){sn.textContent="Couldn't play this file.";});}
+  drawSongs();
+}
+audio.onplay=audio.onpause=drawSongs;
+audio.onerror=function(){sn.textContent="Couldn't play this file.";drawSongs();};
+audio.onended=function(){for(var j=1;j<=SONGS.length;j++){var n=(cur+j)%SONGS.length;if(SONGS[n].src){pick(n);return;}}};
+mb.onclick=function(){sg.hidden=!sg.hidden;if(!sg.hidden)drawSongs();};
+document.getElementById("songx").onclick=function(){sg.hidden=true;};
+gateGame();
+</script>
+</body>
+</html>
